@@ -10,46 +10,74 @@
     <meta name="description" content="Blog Canaco" />
     <meta name="keywords" content="blog, django, bootstrap" />
     
+    {% if request.resolver_match.url_name == 'index' or request.resolver_match.url_name == 'categoria' or request.resolver_match.url_name == 'noticia' or request.resolver_match.url_name == 'noticia_detalle' %}
+    <link rel="stylesheet" href="{% static 'css/revolve-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/revolve.css' %}">
+        {% if request.resolver_match.url_name == 'index' %}
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/canaco-revolve-index.css' %}?v=3">
+        {% elif request.resolver_match.url_name == 'categoria' %}
+    <link rel="stylesheet" href="{% static 'css/canaco-revolve-category.css' %}">
+        {% else %}
+    <link rel="stylesheet" href="{% static 'css/canaco-revolve-post.css' %}">
+        {% endif %}
+    {% else %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap"
-rel="stylesheet">
- 
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrapicons.css">
-
     <link rel="stylesheet" href="{% static 'css/tiny-slider.css' %}">
     <link rel="stylesheet" href="{% static 'css/aos.css' %}">
     <link rel="stylesheet" href="{% static 'css/glightbox.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/flatpickr.min.css' %}">
+    {% endif %}
+    {% if request.resolver_match.url_name != 'index' and request.resolver_match.url_name != 'categoria' and request.resolver_match.url_name != 'noticia' and request.resolver_match.url_name != 'noticia_detalle' %}
+    <link rel="stylesheet" href="{% static 'css/revolve.css' %}">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/canaco-revolve-navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/canaco-theme.css' %}">
 
     <title>{% block title %}Canaco{% endblock %}</title>
 </head>
-<body>
+<body{% if request.resolver_match.url_name == 'index' %} class="revolve-index-page"{% endif %}>
 
- {% include 'partials/header.html' %}
+ {% include 'partials/revolve_header.html' %}
  
  {% block content %}
  {% endblock content %}
  
- {% include 'partials/footer.html' %}
+ {% include 'partials/revolve_footer.html' %}
 
- <div id="overlayer"></div>
- <div class="loader">
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
+    {% if request.resolver_match.url_name == 'index' %}
+    <script src="{% static 'js/jquery-revolve.min.js' %}"></script>
+    <script src="{% static 'js/popper-revolve.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-revolve.min.js' %}"></script>
+    <script src="{% static 'js/slick-revolve.min.js' %}"></script>
+    <script src="{% static 'js/revolve-index.js' %}?v=3"></script>
+    {% elif request.resolver_match.url_name == 'categoria' or request.resolver_match.url_name == 'noticia' or request.resolver_match.url_name == 'noticia_detalle' %}
+    <script src="{% static 'js/jquery-revolve.min.js' %}"></script>
+    <script src="{% static 'js/popper-revolve.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-revolve.min.js' %}"></script>
+    {% else %}
+    <div id="overlayer"></div>
+    <div class="loader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
- </div>
- 
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/tiny-slider.js' %}"></script>
     <script src="{% static 'js/flatpickr.min.js' %}"></script>
     <script src="{% static 'js/aos.js' %}"></script>
     <script src="{% static 'js/glightbox.min.js' %}"></script>
-    <script src="{% static 'js/navbar.js' %}"></script>
     <script src="{% static 'js/counter.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'js/revolve-navbar.js' %}"></script>
 </body>
 </html>

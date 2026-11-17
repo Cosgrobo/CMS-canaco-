@@ -1,0 +1,159 @@
+.canaco-main-header {
+  position: relative;
+  z-index: 100;
+  background: #f5f5f5;
+}
+
+.canaco-main-header > .container > .row {
+  min-height: 92px;
+}
+
+.canaco-main-header .navbar {
+  width: 100%;
+  padding: 0;
+}
+
+.canaco-revolve-wordmark {
+  color: #1c1c1c;
+  font-family: "Unna", Georgia, serif;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.canaco-revolve-wordmark:hover {
+  color: #ce8460;
+}
+
+.canaco-main-header .menu {
+  padding: 0;
+}
+
+.canaco-main-header .menu li {
+  padding: 0 6px;
+}
+
+.canaco-main-header .navbar-nav .nav-link {
+  padding: 25px 6px;
+  color: #111;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.canaco-main-header .navbar-nav .nav-link:hover,
+.canaco-main-header .navbar-nav .nav-link:focus {
+  color: #ce8460;
+}
+
+.canaco-main-header .navbar-toggler {
+  border: 0;
+  color: #111;
+  font-size: 22px;
+  padding: 6px 8px;
+}
+
+.canaco-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.canaco-header-avatar-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.canaco-header-avatar {
+  display: block;
+  width: 44px !important;
+  min-width: 44px;
+  max-width: 44px !important;
+  height: 44px !important;
+  min-height: 44px;
+  max-height: 44px !important;
+  flex: 0 0 44px;
+  aspect-ratio: 1;
+  border: 2px solid #ce8460;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.canaco-main-header .canaco-header-avatar-link > img.canaco-header-avatar {
+  width: 44px !important;
+  max-width: 44px !important;
+  height: 44px !important;
+  max-height: 44px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+
+.canaco-header-avatar-link:hover .canaco-header-avatar,
+.canaco-header-avatar-link:focus-visible .canaco-header-avatar {
+  border-color: #b96f4d;
+  box-shadow: 0 0 0 3px rgba(206, 132, 96, 0.18);
+}
+
+
+.canaco-header-login {
+  color: #111;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.canaco-header-login:hover {
+  color: #ce8460;
+}
+
+.canaco-header-actions .canaco-header-register {
+  padding: 8px 12px;
+  border: 1px solid #ce8460;
+  border-radius: 0;
+  background: #ce8460;
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.canaco-header-actions .canaco-header-register:hover,
+.canaco-header-actions .canaco-header-register:focus {
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+
+@media (max-width: 991.98px) {
+  .canaco-main-header > .container > .row {
+    min-height: 0;
+  }
+
+  .canaco-main-header .navbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 12px 0;
+  }
+
+  .canaco-main-header .navbar-collapse {
+    flex-basis: 100%;
+    margin-top: 12px;
+  }
+
+  .canaco-main-header .navbar-nav .nav-link {
+    padding: 11px 0;
+  }
+
+  .canaco-mobile-avatar-item {
+    padding: 8px 0 !important;
+  }
+
+}

@@ -5,8 +5,6 @@
 <div class="profile-page">
     <div class="profile-edit-card">
         <h3>Editar mi perfil</h3>
-        <p>Estos datos pertenecen a tu cuenta actual: <strong>{{
-                request.user.username }}</strong>.</p>
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show"

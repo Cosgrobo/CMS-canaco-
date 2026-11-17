@@ -1,11 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'partials/sidebar_base.html' %}
+
+{% block title %}Administrar comentarios | CANACO{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>Administrar comentarios</h1>
+            <p class="text-muted">Consulta y administra los comentarios realizados en las publicaciones.</p>
+        </div>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <section class="canaco-admin-record-list" aria-labelledby="comments-list-heading">
+        <h2 class="h4 mb-3" id="comments-list-heading">Comentarios registrados</h2>
+        {% for comentario in comentarios %}
+            <article class="canaco-admin-record-card">
+                <div class="canaco-admin-record-content">
+                    <div class="canaco-admin-record-topline">
+                        <span class="canaco-admin-record-label">Comentario #{{ comentario.id }}</span>
+                        {% if comentario.estado == 'aprobado' %}
+                            <span class="badge canaco-news-status-published">Aprobado</span>
+                        {% elif comentario.estado == 'bloqueado' %}
+                            <span class="badge canaco-admin-status-blocked">Bloqueado</span>
+                        {% else %}
+                            <span class="badge canaco-admin-status-pending">Pendiente</span>
+                        {% endif %}
+                    </div>
+                    <p class="canaco-admin-record-description">{{ comentario.contenido }}</p>
+                    <div class="canaco-admin-record-meta">
+                        <span>Publicación: {{ comentario.publicacion.titulo }}</span>
+                        <span>Usuario: {{ comentario.user.username }}</span>
+                        <span>{{ comentario.createdat|date:"d/m/Y H:i" }}</span>
+                    </div>
+                </div>
+
+                <div class="canaco-admin-record-actions">
+                    {% if comentario.estado != 'aprobado' %}
+                        <form method="POST" action="{% url 'home:aprobar_comentario' comentario.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-success">Aprobar</button>
+                        </form>
+                    {% endif %}
+                    {% if comentario.estado != 'bloqueado' %}
+                        <form method="POST" action="{% url 'home:bloquear_comentario' comentario.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">Bloquear</button>
+                        </form>
+                    {% endif %}
+                    <form method="POST" action="{% url 'home:eliminar_comentario' comentario.pk %}"
+                          onsubmit="return confirm('¿Estás seguro de eliminar este comentario?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm canaco-comment-delete">Eliminar</button>
+                    </form>
+                </div>
+            </article>
+        {% empty %}
+            <div class="canaco-news-empty">No hay comentarios registrados.</div>
+        {% endfor %}
+    </section>
+
+    <div class="mt-4">
+        <a href="{% url 'home:index' %}" class="btn btn-outline-secondary">Volver al inicio</a>
+    </div>
+</div>
+{% endblock content %}

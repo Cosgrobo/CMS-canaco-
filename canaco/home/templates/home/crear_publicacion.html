@@ -1,0 +1,149 @@
+
+{% extends 'partials/base.html' %}
+
+{% block title %}Crear publicación | CANACO{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h1 class="h4 mb-0">Registrar nueva noticia</h1>
+                </div>
+
+                <div class="card-body">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="titulo">Título</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="titulo"
+                                name="titulo"
+                                maxlength="200"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="resumen">Resumen</label>
+                            <textarea
+                                class="form-control"
+                                id="resumen"
+                                name="resumen"
+                                rows="3"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contenido">Contenido</label>
+                            <textarea
+                                class="form-control"
+                                id="contenido"
+                                name="contenido"
+                                rows="7"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="categoria">Categoría</label>
+
+                            <select
+                                class="form-control"
+                                id="categoria"
+                                name="categoria"
+                            >
+                                <option value="">Selecciona una categoría</option>
+
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria.id }}">
+                                        {{ categoria.nombre }}
+                                    </option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imagen_portada">
+                                Imagen de portada
+                            </label>
+
+                            <input
+                                type="file"
+                                class="form-control-file"
+                                id="imagen_portada"
+                                name="imagen_portada"
+                                accept="image/*"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="galeria">
+                                Imágenes de galería
+                            </label>
+
+                            <input
+                                type="file"
+                                class="form-control-file"
+                                id="galeria"
+                                name="galeria"
+                                accept="image/*"
+                                multiple
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+
+                            <select
+                                class="form-control"
+                                id="estado"
+                                name="estado"
+                            >
+                                <option value="borrador">Borrador</option>
+                                <option value="publicado">Publicado</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Guardar noticia
+                        </button>
+
+                        <a
+                            href="{% url 'home:crud_noticas' %}"
+                            class="btn btn-secondary"
+                        >
+                            Cancelar
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,96 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}Editar noticia | CANACO{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h4 mb-0">Editar noticia</h1>
+                </div>
+
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="titulo">Título</label>
+                            <input type="text" class="form-control" id="titulo"
+                                   name="titulo" maxlength="180"
+                                   value="{{ publicacion.titulo }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="resumen">Resumen</label>
+                            <textarea class="form-control" id="resumen"
+                                      name="resumen" rows="3" required>{{ publicacion.resumen }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contenido">Contenido</label>
+                            <textarea class="form-control" id="contenido"
+                                      name="contenido" rows="7" required>{{ publicacion.contenido }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="categoria">Categoría</label>
+                            <select class="form-control" id="categoria" name="categoria">
+                                <option value="">Sin categoría</option>
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria.pk }}"
+                                            {% if publicacion.categoria_id == categoria.pk %}selected{% endif %}>
+                                        {{ categoria.nombre }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        {% if publicacion.imagen_portada and publicacion.imagen_portada.ruta %}
+                            <div class="form-group">
+                                <p>Portada actual</p>
+                                <img src="{{ publicacion.imagen_portada.ruta.url }}"
+                                     alt="Portada actual de {{ publicacion.titulo }}"
+                                     class="img-fluid mb-2" style="max-height: 260px;">
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label for="imagen_portada">Cambiar imagen de portada</label>
+                            <input type="file" class="form-control-file"
+                                   id="imagen_portada" name="imagen_portada"
+                                   accept="image/*">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="galeria">Añadir imágenes a la galería</label>
+                            <input type="file" class="form-control-file"
+                                   id="galeria" name="galeria" accept="image/*" multiple>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <select class="form-control" id="estado" name="estado">
+                                <option value="borrador" {% if publicacion.estado == 'borrador' %}selected{% endif %}>Borrador</option>
+                                <option value="publicado" {% if publicacion.estado == 'publicado' %}selected{% endif %}>Publicado</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        <a href="{% url 'home:crud_noticias' %}" class="btn btn-secondary">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
