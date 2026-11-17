@@ -1,0 +1,998 @@
+:root {
+  --canaco-accent: #ce8460;
+  --canaco-accent-hover: #b96f4d;
+  --canaco-ink: #1c1c1c;
+  --canaco-text: #575769;
+  --canaco-muted: #777;
+  --canaco-border: #e8e4e1;
+  --canaco-soft: #f5f5f5;
+  --bs-primary: #ce8460;
+  --bs-secondary: #575769;
+  --bs-success: #ce8460;
+  --bs-danger: #575769;
+  --bs-body-font-family: "Open Sans", Arial, sans-serif;
+  --bs-body-color: #575769;
+}
+
+html,
+body {
+  font-family: "Open Sans", Arial, sans-serif;
+  color: var(--canaco-text);
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+body > #main {
+  width: 100%;
+  flex: 1 0 auto;
+}
+
+body > .footer-2 {
+  flex-shrink: 0;
+}
+
+button,
+input,
+select,
+textarea,
+table,
+.btn {
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+body,
+.panel-shell {
+  background-color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6,
+.user-admin-card h3 {
+  color: var(--canaco-ink);
+  font-family: "Unna", Georgia, serif;
+}
+
+.profile-field span,
+.profile-field strong {
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+a,
+a:hover,
+a:focus,
+.text-primary,
+.panel-nav-link,
+.panel-nav-link:hover,
+.panel-nav-link:focus,
+.canaco-category-page .sidebar-widget.category a[aria-current="page"] {
+  color: var(--canaco-accent);
+}
+
+.panel-sidebar {
+  background: var(--canaco-soft);
+}
+
+.panel-nav-link {
+  border-color: var(--canaco-border);
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.panel-nav-link:hover,
+.panel-nav-link:focus {
+  background: #f8efea;
+}
+
+.panel-nav-link.active {
+  color: #fff !important;
+  background: var(--canaco-accent) !important;
+  box-shadow: inset 4px 0 0 var(--canaco-accent-hover);
+}
+
+.user-form-card {
+  color: var(--canaco-text);
+  background: var(--canaco-soft);
+  border: 1px solid var(--canaco-border);
+}
+
+.user-form-card h3 {
+  color: var(--canaco-ink);
+}
+
+.user-form-row label,
+.profile-form-row label {
+  color: var(--canaco-ink);
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.user-form-row input:focus,
+.profile-form-row input:focus,
+.profile-form-row select:focus,
+.form-control:focus {
+  border-color: var(--canaco-accent);
+  box-shadow: 0 0 0 0.2rem rgba(206, 132, 96, 0.2);
+  outline-color: rgba(206, 132, 96, 0.25);
+}
+
+.user-form-submit,
+.btn-primary,
+.btn-success,
+.profile-actions .btn-success,
+.canaco-header-actions .canaco-header-register {
+  color: #fff;
+  background: var(--canaco-accent);
+  border-color: var(--canaco-accent);
+}
+
+.user-form-submit:hover,
+.user-form-submit:focus,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-success:hover,
+.btn-success:focus,
+.profile-actions .btn-success:hover,
+.canaco-header-actions .canaco-header-register:hover {
+  color: #fff;
+  background: var(--canaco-accent-hover);
+  border-color: var(--canaco-accent-hover);
+}
+
+.user-form-back,
+.btn-outline-primary,
+.btn-outline-secondary {
+  color: var(--canaco-accent);
+  border-color: var(--canaco-accent);
+}
+
+.user-form-back:hover,
+.user-form-back:focus,
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  color: #fff;
+  background: var(--canaco-accent);
+  border-color: var(--canaco-accent);
+}
+
+.btn-danger,
+.panel-logout-button {
+  color: #fff;
+  background: var(--canaco-ink);
+  border-color: var(--canaco-ink);
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.panel-logout-button:hover,
+.panel-logout-button:focus {
+  color: #fff;
+  background: #3a3431;
+  border-color: #3a3431;
+}
+
+.profile-card,
+.profile-edit-card,
+.account-card {
+  border-color: var(--canaco-border);
+}
+
+.profile-field,
+.canaco-fullwidth-post .post-author {
+  border-color: var(--canaco-border);
+}
+
+.canaco-news-placeholder,
+.canaco-category-placeholder,
+.canaco-recent-thumb,
+.canaco-post-placeholder,
+.canaco-post-related-placeholder {
+  background: linear-gradient(135deg, #8d5740, var(--canaco-accent));
+  font-family: "Unna", Georgia, serif;
+}
+
+.canaco-post-summary,
+.profile-field strong {
+  color: var(--canaco-text);
+}
+
+.canaco-users-page .table {
+  color: var(--canaco-text);
+}
+
+.canaco-users-page .table thead th {
+  color: var(--canaco-ink);
+  border-bottom-color: var(--canaco-accent);
+  font-family: "Unna", Georgia, serif;
+}
+
+.canaco-users-page .table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-accent-bg: #faf6f3;
+  color: var(--canaco-text);
+}
+
+.canaco-user-status-active,
+.canaco-users-page .canaco-user-edit {
+  color: #fff;
+  background: var(--canaco-accent);
+  border-color: var(--canaco-accent);
+}
+
+.canaco-user-status-blocked {
+  color: #fff;
+  background: var(--canaco-ink);
+}
+
+.canaco-users-page .canaco-user-edit:hover,
+.canaco-users-page .canaco-user-edit:focus {
+  color: #fff;
+  background: var(--canaco-accent-hover);
+  border-color: var(--canaco-accent-hover);
+}
+
+.canaco-user-actions {
+  white-space: nowrap;
+}
+
+.canaco-user-actions .canaco-user-edit,
+.canaco-user-actions .canaco-user-delete {
+  min-width: 36px;
+  padding: 6px 9px;
+  border: 1px solid transparent;
+  color: var(--canaco-accent) !important;
+  background: transparent !important;
+  text-align: center;
+}
+
+.canaco-user-actions .canaco-user-edit:hover,
+.canaco-user-actions .canaco-user-edit:focus,
+.canaco-user-actions .canaco-user-delete:hover,
+.canaco-user-actions .canaco-user-delete:focus {
+  color: var(--canaco-accent-hover) !important;
+  border-color: var(--canaco-accent);
+  background: transparent !important;
+}
+
+.canaco-user-actions .canaco-user-edit i,
+.canaco-user-actions .canaco-user-delete i {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.canaco-news-actions {
+  white-space: nowrap;
+}
+
+.canaco-news-actions .canaco-news-edit,
+.canaco-news-actions .canaco-news-delete {
+  min-width: 36px;
+  margin: 0 2px 4px;
+  padding: 6px 9px;
+  border: 1px solid transparent;
+  color: var(--canaco-accent) !important;
+  background: transparent !important;
+  text-align: center;
+}
+
+.canaco-news-actions .canaco-news-edit:hover,
+.canaco-news-actions .canaco-news-edit:focus,
+.canaco-news-actions .canaco-news-delete:hover,
+.canaco-news-actions .canaco-news-delete:focus {
+  color: var(--canaco-accent-hover) !important;
+  border-color: var(--canaco-accent);
+  background: transparent !important;
+}
+
+.canaco-news-actions .canaco-news-edit i,
+.canaco-news-actions .canaco-news-delete i {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.canaco-news-delete-form {
+  display: inline;
+}
+
+.canaco-user-switch-form,
+.canaco-user-delete-form {
+  display: inline-flex;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.canaco-user-switch-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  cursor: pointer;
+}
+
+.canaco-user-switch {
+  position: absolute;
+  z-index: 1;
+  width: 46px;
+  height: 26px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.canaco-user-switch-track {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 26px;
+  border: 1px solid var(--canaco-ink);
+  border-radius: 999px;
+  background: var(--canaco-ink);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.canaco-user-switch-track::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+.canaco-user-switch:checked + .canaco-user-switch-track {
+  border-color: var(--canaco-accent);
+  background: var(--canaco-accent);
+}
+
+.canaco-user-switch:checked + .canaco-user-switch-track::before {
+  transform: translateX(20px);
+}
+
+.canaco-user-switch:focus-visible {
+  outline: none;
+}
+
+.canaco-user-switch:focus-visible + .canaco-user-switch-track {
+  outline: 3px solid rgba(206, 132, 96, 0.35);
+  outline-offset: 2px;
+}
+
+.canaco-password-page .alert-success {
+  color: #8d5740;
+  border-color: var(--canaco-border);
+  background: #f8efea;
+}
+
+.canaco-password-page .alert-danger,
+.canaco-password-page .alert-error {
+  color: var(--canaco-ink);
+  border-color: var(--canaco-border);
+  background: var(--canaco-soft);
+}
+
+.canaco-password-page .profile-form-row input:focus {
+  border-color: var(--canaco-accent);
+  box-shadow: 0 0 0 0.2rem rgba(206, 132, 96, 0.2);
+}
+
+.canaco-password-page .profile-form-actions .btn-primary {
+  color: #fff;
+  background: var(--canaco-accent);
+  border-color: var(--canaco-accent);
+}
+
+.canaco-password-page .profile-form-actions .btn-primary:hover,
+.canaco-password-page .profile-form-actions .btn-primary:focus {
+  background: var(--canaco-accent-hover);
+  border-color: var(--canaco-accent-hover);
+}
+
+.canaco-password-page .profile-form-actions .btn-outline-secondary {
+  color: var(--canaco-accent);
+  border-color: var(--canaco-accent);
+}
+
+.canaco-password-page .profile-form-actions .btn-outline-secondary:hover,
+.canaco-password-page .profile-form-actions .btn-outline-secondary:focus {
+  color: #fff;
+  background: var(--canaco-accent);
+  border-color: var(--canaco-accent);
+}
+
+.canaco-news-admin-page .card {
+  border-color: var(--canaco-border);
+}
+
+.canaco-news-admin-page .card-header,
+.canaco-news-admin-page .table-light > * {
+  color: var(--canaco-ink);
+  background: var(--canaco-soft);
+}
+
+.canaco-news-status-published {
+  color: #fff;
+  background: var(--canaco-accent);
+}
+
+.canaco-news-status-draft {
+  color: #fff;
+  background: var(--canaco-ink);
+}
+
+.canaco-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.canaco-news-card {
+  display: flex;
+  min-height: 190px;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--canaco-border);
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(28, 28, 28, 0.05);
+}
+
+.canaco-news-card-image {
+  display: flex;
+  width: 190px;
+  min-width: 190px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #8d5740, var(--canaco-accent));
+  color: #fff;
+  font-family: "Unna", Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.canaco-news-card-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  object-fit: cover;
+}
+
+.canaco-news-card-content {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 24px;
+}
+
+.canaco-news-card-topline,
+.canaco-news-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.canaco-news-card-topline {
+  justify-content: space-between;
+}
+
+.canaco-news-card-category,
+.canaco-news-card-meta {
+  color: var(--canaco-muted);
+  font-size: 12px;
+}
+
+.canaco-news-card-category {
+  color: var(--canaco-accent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.canaco-news-card-content h3 {
+  margin: 8px 0 5px;
+  font-size: 23px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.canaco-news-card-summary {
+  display: -webkit-box;
+  margin: 0 0 10px;
+  overflow: hidden;
+  color: var(--canaco-text);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.canaco-news-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 14px;
+  border-left: 1px solid var(--canaco-border);
+}
+
+.canaco-news-actions form {
+  margin: 0;
+}
+
+.canaco-news-empty {
+  padding: 40px 20px;
+  border: 1px solid var(--canaco-border);
+  background: var(--canaco-soft);
+  color: var(--canaco-muted);
+  text-align: center;
+}
+
+.canaco-admin-record-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.canaco-admin-record-card {
+  display: flex;
+  min-height: 140px;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--canaco-border);
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(28, 28, 28, 0.05);
+}
+
+.canaco-admin-record-content {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 24px;
+}
+
+.canaco-admin-record-topline,
+.canaco-admin-record-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.canaco-admin-record-topline {
+  justify-content: space-between;
+}
+
+.canaco-admin-record-label {
+  color: var(--canaco-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.canaco-admin-record-title {
+  margin: 8px 0;
+  color: var(--canaco-ink);
+  font-family: "Unna", Georgia, serif;
+  font-size: 23px;
+}
+
+.canaco-admin-record-description {
+  margin: 10px 0;
+  color: var(--canaco-text);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.canaco-admin-record-meta {
+  color: var(--canaco-muted);
+  font-size: 12px;
+}
+
+.canaco-admin-record-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border-left: 1px solid var(--canaco-border);
+}
+
+.canaco-admin-record-actions form {
+  margin: 0;
+}
+
+.canaco-admin-status-blocked {
+  color: #fff;
+  background: #343434;
+}
+
+.canaco-admin-status-pending {
+  color: #fff;
+  background: #9a7140;
+}
+
+.canaco-comment-delete {
+  border: 1px solid #a93f36;
+  background: #a93f36;
+  color: #fff;
+  font-weight: 600;
+}
+
+.canaco-comment-delete:hover,
+.canaco-comment-delete:focus {
+  border-color: #852f29;
+  background: #852f29;
+  color: #fff;
+}
+
+@media (max-width: 767.98px) {
+  .canaco-news-card {
+    flex-wrap: wrap;
+  }
+
+  .canaco-news-card-image {
+    width: 135px;
+    min-width: 135px;
+    min-height: 150px;
+  }
+
+  .canaco-news-card-image img {
+    min-height: 150px;
+  }
+
+  .canaco-news-card-content {
+    padding: 16px;
+  }
+
+  .canaco-news-card-content h3 {
+    font-size: 20px;
+  }
+
+  .canaco-news-actions {
+    width: 100%;
+    justify-content: flex-end;
+    border-top: 1px solid var(--canaco-border);
+    border-left: 0;
+  }
+
+  .canaco-admin-record-card {
+    flex-wrap: wrap;
+  }
+
+  .canaco-admin-record-content {
+    padding: 16px;
+  }
+
+  .canaco-admin-record-actions {
+    width: 100%;
+    justify-content: flex-end;
+    border-top: 1px solid var(--canaco-border);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .canaco-news-card-image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .canaco-news-card-image img {
+    height: 180px;
+    min-height: 180px;
+  }
+}
+
+/* Shared CANACO palette and typography across public and account views. */
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.profile-logout-form {
+  display: flex;
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.canaco-profile-page .profile-card {
+  width: min(100%, 900px);
+}
+
+.canaco-profile-header,
+.canaco-profile-identity {
+  display: flex;
+  align-items: center;
+}
+
+.canaco-profile-header {
+  justify-content: space-between;
+  gap: 24px;
+  padding: 4px 0 28px;
+  border-bottom: 1px solid var(--canaco-border);
+}
+
+.canaco-profile-identity {
+  min-width: 0;
+  gap: 18px;
+}
+
+.canaco-profile-identity .profile-photo {
+  flex: 0 0 88px;
+  width: 88px;
+  min-width: 88px;
+  height: 88px;
+  min-height: 88px;
+  border-color: #f8efea;
+}
+
+.canaco-profile-heading {
+  min-width: 0;
+}
+
+.canaco-profile-heading h1 {
+  margin: 0 0 4px;
+  color: var(--canaco-ink);
+  font-size: 28px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.canaco-profile-heading p {
+  margin: 0;
+  color: var(--canaco-muted);
+  overflow-wrap: anywhere;
+}
+
+.canaco-profile-page .profile-grid {
+  margin-top: 24px;
+}
+
+.canaco-profile-page .profile-field span {
+  color: var(--canaco-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.canaco-profile-page .profile-field strong {
+  color: var(--canaco-ink);
+  font-size: 17px;
+}
+
+@media (max-width: 575.98px) {
+  .canaco-profile-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .canaco-profile-identity {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .canaco-profile-identity .profile-photo {
+    flex-basis: 64px;
+    width: 64px;
+    min-width: 64px;
+    height: 64px;
+    min-height: 64px;
+  }
+
+  .canaco-profile-heading h1 {
+    font-size: 22px;
+  }
+
+  .canaco-profile-header .profile-logout-form .btn {
+    padding: 7px 9px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+}
+
+body,
+button,
+input,
+select,
+textarea,
+table,
+.btn,
+.form-control,
+.form-select {
+  font-family: "Open Sans", Arial, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.card-header,
+.widget-title,
+.post-title,
+.lg-title {
+  font-family: "Unna", Georgia, serif !important;
+}
+
+.btn-primary,
+.btn-success,
+.btn-warning,
+.btn.btn-primary,
+.btn.btn-success,
+.btn.btn-warning {
+  color: #fff !important;
+  background-color: var(--canaco-accent) !important;
+  border-color: var(--canaco-accent) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-success:hover,
+.btn-success:focus,
+.btn-warning:hover,
+.btn-warning:focus,
+.btn.btn-primary:hover,
+.btn.btn-primary:focus,
+.btn.btn-success:hover,
+.btn.btn-success:focus,
+.btn.btn-warning:hover,
+.btn.btn-warning:focus {
+  color: #fff !important;
+  background-color: var(--canaco-accent-hover) !important;
+  border-color: var(--canaco-accent-hover) !important;
+}
+
+.btn-secondary,
+.btn-danger,
+.btn.btn-secondary,
+.btn.btn-danger {
+  color: #fff !important;
+  background-color: var(--canaco-ink) !important;
+  border-color: var(--canaco-ink) !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-danger:hover,
+.btn-danger:focus,
+.btn.btn-secondary:hover,
+.btn.btn-secondary:focus,
+.btn.btn-danger:hover,
+.btn.btn-danger:focus {
+  color: #fff !important;
+  background-color: #3a3431 !important;
+  border-color: #3a3431 !important;
+}
+
+.btn-outline-secondary,
+.btn.btn-outline-secondary {
+  color: var(--canaco-accent) !important;
+  background: transparent !important;
+  border-color: var(--canaco-accent) !important;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus,
+.btn.btn-outline-secondary:hover,
+.btn.btn-outline-secondary:focus {
+  color: #fff !important;
+  background-color: var(--canaco-accent) !important;
+  border-color: var(--canaco-accent) !important;
+}
+
+.alert-success,
+.alert-warning {
+  color: #8d5740 !important;
+  background-color: #f8efea !important;
+  border-color: #ead1c4 !important;
+}
+
+.alert-danger,
+.alert-error {
+  color: #64372b !important;
+  background-color: #f5ece9 !important;
+  border-color: #dfc6bc !important;
+}
+
+.alert-info,
+.alert-secondary {
+  color: var(--canaco-text) !important;
+  background-color: var(--canaco-soft) !important;
+  border-color: var(--canaco-border) !important;
+}
+
+.badge-success,
+.bg-success {
+  color: #fff !important;
+  background-color: var(--canaco-accent) !important;
+}
+
+.badge-danger,
+.bg-danger {
+  color: #fff !important;
+  background-color: var(--canaco-ink) !important;
+}
+
+.badge-warning,
+.bg-warning {
+  color: #8d5740 !important;
+  background-color: #f8efea !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--canaco-accent) !important;
+  box-shadow: 0 0 0 0.2rem rgba(206, 132, 96, 0.2) !important;
+}
+
+/* The account sidebar becomes a horizontal subnavigation under the header. */
+.panel-shell {
+  padding-top: 18px;
+}
+
+.panel-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.panel-sidebar {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-bottom: 1px solid var(--canaco-border);
+  background: #fff;
+  scrollbar-width: thin;
+  scrollbar-color: var(--canaco-accent) var(--canaco-soft);
+}
+
+.panel-sidebar .nav {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  flex-direction: row !important;
+  flex-wrap: nowrap;
+  gap: 2px;
+}
+
+.panel-sidebar .nav > li {
+  flex: 0 0 auto;
+}
+
+.panel-nav-link {
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 0 !important;
+  border-bottom: 3px solid transparent !important;
+  white-space: nowrap;
+}
+
+.panel-nav-link:hover,
+.panel-nav-link:focus {
+  background: #f8efea;
+}
+
+.panel-nav-link.active {
+  color: var(--canaco-accent) !important;
+  background: #f8efea !important;
+  box-shadow: none;
+  border-bottom-color: var(--canaco-accent) !important;
+}
+
+.panel-content {
+  width: 100%;
+}
+
+

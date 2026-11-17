@@ -1,0 +1,184 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}{% if publicacion %}{{ publicacion.titulo }} | CANACO{% else %}Noticias | CANACO{% endif %}{% endblock %}
+{% block content %}
+<main class="canaco-fullwidth-post">
+    <section class="single-block-wrapper section-padding">
+        <div class="container">
+            {% if messages %}
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-10">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if publicacion %}
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-11 col-sm-12">
+                    <article class="single-post">
+                        <header class="post-header mb-5 text-center">
+                            {% if publicacion.categoria %}
+                            <div class="meta-cat">
+                                <a class="post-category font-extra text-color text-uppercase font-sm letter-spacing-1" href="{% url 'home:categoria' %}?categoria={{ publicacion.categoria_id }}">{{ publicacion.categoria.nombre }}</a>
+                            </div>
+                            {% endif %}
+                            <h1 class="post-title mt-2">{{ publicacion.titulo }}</h1>
+                            <div class="post-meta">
+                                <span class="text-uppercase font-sm letter-spacing-1 mr-3">{% if publicacion.autor %}{{ publicacion.autor.get_full_name|default:publicacion.autor.username }}{% else %}CANACO{% endif %}</span>
+                                <span class="text-uppercase font-sm letter-spacing-1">{{ publicacion.createdat|date:"j F Y" }}</span>
+                                <span class="text-uppercase font-sm letter-spacing-1 ml-3">{{ publicacion.visitas }} visitas</span>
+                            </div>
+                            <div class="post-featured-image mt-5">
+                                {% if publicacion.imagen_portada and publicacion.imagen_portada.ruta %}
+                                <img src="{{ publicacion.imagen_portada.ruta.url }}" class="img-fluid w-100" alt="{{ publicacion.titulo }}">
+                                {% else %}
+                                <div class="canaco-post-placeholder" role="img" aria-label="Noticia CANACO sin imagen de portada">CANACO</div>
+                                {% endif %}
+                            </div>
+                        </header>
+
+                        <div class="post-body">
+                            {% if publicacion.resumen %}<p class="canaco-post-summary">{{ publicacion.resumen }}</p>{% endif %}
+                            <div class="entry-content">{{ publicacion.contenido|linebreaks }}</div>
+
+                            {% if publicacion.categoria %}
+                            <div class="post-tags py-4">
+                                <a href="{% url 'home:categoria' %}?categoria={{ publicacion.categoria_id }}">#{{ publicacion.categoria.nombre|slugify }}</a>
+                            </div>
+                            {% endif %}
+
+                            <div class="tags-share-box center-box d-flex text-center justify-content-between align-items-center border-top border-bottom py-3">
+                                <span class="single-comment-o"><i class="ti-comment mr-2"></i>{{ comentarios|length }} comentarios</span>
+                                <div class="list-posts-share">
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" aria-label="Compartir en Facebook" target="_blank" rel="noopener noreferrer"><i class="ti-facebook"></i></a>
+                                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&amp;text={{ publicacion.titulo|urlencode }}" aria-label="Compartir en X" target="_blank" rel="noopener noreferrer"><i class="ti-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener noreferrer"><i class="ti-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    {% if galeria %}
+                    <section class="canaco-post-gallery mt-5" aria-label="Galería de la noticia">
+                        <h2 class="h3 mb-4 text-center">Galería</h2>
+                        <div class="row">
+                            {% for imagen in galeria %}
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <img src="{{ imagen.archivo.ruta.url }}" alt="Imagen de {{ publicacion.titulo }}" class="img-fluid w-100">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                    {% endif %}
+
+                    <section class="post-author d-flex my-5" aria-label="Autor de la noticia">
+                        <div class="author-img">
+                            {% if publicacion.autor and publicacion.autor.perfil.foto_perfil and publicacion.autor.perfil.foto_perfil.ruta %}
+                            <img alt="Foto del autor" src="{{ publicacion.autor.perfil.foto_perfil.ruta.url }}" class="avatar avatar-100 photo" width="100" height="100">
+                            {% else %}
+                            <img alt="CANACO" src="{% static 'uploads/profile-default.jpg' %}" class="avatar avatar-100 photo" width="100" height="100">
+                            {% endif %}
+                        </div>
+                        <div class="author-content ml-4">
+                            <h2 class="h4 mb-3">{% if publicacion.autor %}{{ publicacion.autor.get_full_name|default:publicacion.autor.username }}{% else %}CANACO{% endif %}</h2>
+                            <p class="mb-0">Información y noticias de la Cámara Nacional de Comercio.</p>
+                        </div>
+                    </section>
+
+                    {% if noticia_anterior or noticia_siguiente %}
+                    <nav class="post-pagination clearfix border-top border-bottom py-4" aria-label="Navegación entre noticias">
+                        {% if noticia_anterior %}
+                        <div class="prev-post">
+                            <a href="{% url 'home:noticia_detalle' noticia_anterior.pk %}">
+                                <span class="text-uppercase font-sm letter-spacing">Anterior</span>
+                                <h2 class="h5 mt-3">{{ noticia_anterior.titulo }}</h2>
+                            </a>
+                        </div>
+                        {% endif %}
+                        {% if noticia_siguiente %}
+                        <div class="next-post">
+                            <a href="{% url 'home:noticia_detalle' noticia_siguiente.pk %}">
+                                <span class="text-uppercase font-sm letter-spacing">Siguiente</span>
+                                <h2 class="h5 mt-3">{{ noticia_siguiente.titulo }}</h2>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </nav>
+                    {% endif %}
+
+                    {% if publicaciones_relacionadas %}
+                    <section class="related-posts-block mt-5">
+                        <h2 class="news-title mb-4 text-center">Noticias relacionadas</h2>
+                        <div class="row">
+                            {% for relacionada in publicaciones_relacionadas %}
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <article class="post-block-wrapper mb-4 mb-lg-0">
+                                    <a href="{% url 'home:noticia_detalle' relacionada.pk %}">
+                                        {% if relacionada.imagen_portada and relacionada.imagen_portada.ruta %}
+                                        <img class="img-fluid w-100" src="{{ relacionada.imagen_portada.ruta.url }}" alt="{{ relacionada.titulo }}">
+                                        {% else %}
+                                        <div class="canaco-post-related-placeholder">CANACO</div>
+                                        {% endif %}
+                                    </a>
+                                    <div class="post-content mt-3">
+                                        <h3 class="h5"><a href="{% url 'home:noticia_detalle' relacionada.pk %}">{{ relacionada.titulo }}</a></h3>
+                                        <span class="text-muted font-sm">{{ relacionada.createdat|date:"j F Y" }}</span>
+                                    </div>
+                                </article>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                    {% endif %}
+
+                    <section class="comment-area my-5" aria-labelledby="comments-heading">
+                        <h2 class="h3 mb-4 text-center" id="comments-heading">Comentarios ({{ comentarios|length }})</h2>
+                        {% for comentario in comentarios %}
+                        <article class="comment-area-box media mt-4">
+                            <div class="canaco-comment-avatar" aria-hidden="true">{{ comentario.user.username|first|upper }}</div>
+                            <div class="media-body ml-4">
+                                <h3 class="h5 mb-0">{{ comentario.user.get_full_name|default:comentario.user.username }}</h3>
+                                <span class="date-comm font-sm text-capitalize"><i class="ti-time mr-2"></i>{{ comentario.createdat|date:"j F Y" }}</span>
+                                <div class="comment-content mt-3"><p>{{ comentario.contenido|linebreaksbr }}</p></div>
+                            </div>
+                        </article>
+                        {% empty %}
+                        <p class="text-center">Todavía no hay comentarios aprobados.</p>
+                        {% endfor %}
+                    </section>
+
+                    {% if request.user.is_authenticated %}
+                    <form class="comment-form mb-5 gray-bg p-4 p-md-5" method="post">
+                        {% csrf_token %}
+                        <h2 class="h3 mb-4 text-center">Deja un comentario</h2>
+                        <label class="form-label" for="contenido">Tu comentario</label>
+                        <textarea class="form-control mb-3" name="contenido" id="contenido" rows="5" required></textarea>
+                        <button class="btn btn-primary" type="submit">Enviar comentario</button>
+                        <p class="small mt-3 mb-0">Tu comentario aparecerá después de ser revisado.</p>
+                    </form>
+                    {% else %}
+                    <p class="text-center mb-5"><a href="{% url 'home:login' %}?next={{ request.path|urlencode }}" class="btn btn-primary">Inicia sesión para comentar</a></p>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="canaco-post-empty text-center">
+                        <h1>No hay noticias publicadas</h1>
+                        <p>Consulta más tarde las novedades de CANACO.</p>
+                        <a href="{% url 'home:index' %}" class="btn btn-primary mt-3">Volver al inicio</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock content %}

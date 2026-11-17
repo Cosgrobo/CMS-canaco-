@@ -1,0 +1,75 @@
+
+{% extends 'partials/base.html' %}
+
+{% block title %}Editar categoría | CANACO{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h1 class="h4 mb-0">Editar categoría</h1>
+                </div>
+
+                <div class="card-body">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="form-group">
+
+                            <label for="nombre">
+                                Nombre de la categoría
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="nombre"
+                                name="nombre"
+                                value="{{ categoria.nombre }}"
+                                maxlength="60"
+                                required
+                            >
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Guardar cambios
+                        </button>
+
+                        <a
+                            href="{% url 'home:crud_categorias' %}"
+                            class="btn btn-secondary"
+                        >
+                            Cancelar
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

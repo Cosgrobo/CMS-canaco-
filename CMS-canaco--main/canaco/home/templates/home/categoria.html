@@ -1,0 +1,116 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}{% if categoria_seleccionada %}{{ categoria_seleccionada.nombre }}{% else %}Categorías{% endif %} | CANACO{% endblock %}
+{% block content %}
+<main class="canaco-category-page">
+    <section class="breadcrumb-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="lg-title">{% if categoria_seleccionada %}{{ categoria_seleccionada.nombre }}{% else %}Categorías{% endif %}</h1>
+                    <p class="canaco-category-intro">Noticias y publicaciones de CANACO</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <section class="col-lg-8 col-md-12" aria-label="Publicaciones">
+                    <div class="row">
+                        {% for publicacion in page_obj %}
+                        <div class="col-lg-6 col-md-6">
+                            <article class="post-grid mb-5">
+                                <a class="post-thumb mb-4 d-block" href="{% url 'home:noticia_detalle' publicacion.pk %}">
+                                    {% if publicacion.imagen_portada and publicacion.imagen_portada.ruta %}
+                                    <img src="{{ publicacion.imagen_portada.ruta.url }}" alt="{{ publicacion.titulo }}" class="img-fluid w-100">
+                                    {% else %}
+                                    <div class="canaco-category-placeholder" role="img" aria-label="Publicación CANACO sin imagen de portada">CANACO</div>
+                                    {% endif %}
+                                </a>
+                                {% if publicacion.categoria %}
+                                <a href="?categoria={{ publicacion.categoria_id }}" class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1">{{ publicacion.categoria.nombre }}</a>
+                                {% else %}
+                                <span class="cat-name text-color font-extra text-sm text-uppercase letter-spacing-1">CANACO</span>
+                                {% endif %}
+                                <h2 class="post-title mt-1"><a href="{% url 'home:noticia_detalle' publicacion.pk %}">{{ publicacion.titulo }}</a></h2>
+                                <span class="text-muted text-capitalize">{{ publicacion.createdat|date:"j F Y" }}</span>
+                            </article>
+                        </div>
+                        {% empty %}
+                        <div class="col-12">
+                            <div class="canaco-category-empty text-center">
+                                <h2>{% if categoria_seleccionada %}Todavía no hay publicaciones en esta categoría{% elif categorias %}Todavía no hay publicaciones registradas{% else %}Todavía no hay categorías ni publicaciones{% endif %}</h2>
+                                <p>Las noticias publicadas aparecerán aquí.</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if page_obj.paginator.num_pages > 1 %}
+                    <nav class="pagination mt-5 pt-4" aria-label="Paginación de publicaciones">
+                        <ul class="list-inline">
+                            {% if page_obj.has_previous %}
+                            <li class="list-inline-item"><a href="?{% if categoria_seleccionada %}categoria={{ categoria_seleccionada.pk }}&amp;{% endif %}page={{ page_obj.previous_page_number }}" class="prev-posts" aria-label="Página anterior"><i class="ti-arrow-left"></i></a></li>
+                            {% endif %}
+                            {% for page_number in page_obj.paginator.page_range %}
+                            <li class="list-inline-item"><a href="?{% if categoria_seleccionada %}categoria={{ categoria_seleccionada.pk }}&amp;{% endif %}page={{ page_number }}"{% if page_obj.number == page_number %} class="active" aria-current="page"{% endif %}>{{ page_number }}</a></li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                            <li class="list-inline-item"><a href="?{% if categoria_seleccionada %}categoria={{ categoria_seleccionada.pk }}&amp;{% endif %}page={{ page_obj.next_page_number }}" class="prev-posts" aria-label="Página siguiente"><i class="ti-arrow-right"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </section>
+
+                <aside class="col-lg-4 col-md-6" aria-label="Explorar categorías y noticias">
+                    <div class="sidebar sidebar-right">
+                        <div class="sidebar-wrap mt-5 mt-lg-0">
+                            <section class="sidebar-widget category mb-5">
+                                <h2 class="h4 widget-title">Categorías</h2>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="border-bottom py-2">
+                                        <a href="{% url 'home:categoria' %}"{% if not categoria_seleccionada %} aria-current="page"{% endif %}>Todas las categorías</a>
+                                        <span class="float-right">{{ categorias|length }}</span>
+                                    </li>
+                                    {% for categoria in categorias %}
+                                    <li class="border-bottom py-2">
+                                        <a href="?categoria={{ categoria.pk }}"{% if categoria_seleccionada.pk == categoria.pk %} aria-current="page"{% endif %}>{{ categoria.nombre }}</a>
+                                        <span class="float-right">{{ categoria.publicaciones_count }}</span>
+                                    </li>
+                                    {% empty %}
+                                    <li class="py-2 text-muted">Aún no hay categorías.</li>
+                                    {% endfor %}
+                                </ul>
+                            </section>
+
+                            {% if publicaciones_recientes %}
+                            <section class="sidebar-widget mb-5">
+                                <h2 class="h4 widget-title">Publicaciones recientes</h2>
+                                {% for reciente in publicaciones_recientes %}
+                                <article class="media border-bottom py-3 sidebar-post-item">
+                                    <a href="{% url 'home:noticia_detalle' reciente.pk %}" class="canaco-recent-thumb">
+                                        {% if reciente.imagen_portada and reciente.imagen_portada.ruta %}
+                                        <img src="{{ reciente.imagen_portada.ruta.url }}" alt="{{ reciente.titulo }}" class="img-fluid">
+                                        {% else %}
+                                        <span aria-hidden="true">C</span>
+                                        {% endif %}
+                                    </a>
+                                    <div class="media-body ml-3">
+                                        <h3 class="h6 mb-1"><a href="{% url 'home:noticia_detalle' reciente.pk %}">{{ reciente.titulo }}</a></h3>
+                                        <span class="text-muted font-sm">{{ reciente.createdat|date:"j F Y" }}</span>
+                                    </div>
+                                </article>
+                                {% endfor %}
+                            </section>
+                            {% endif %}
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}
