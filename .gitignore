@@ -1,0 +1,31 @@
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Bases de datos locales
+*.sqlite3
+*.db
+
+# Entornos virtuales
+venv/
+env/
+canaco_env/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Django
+staticfiles/
+
+# Archivos temporales
+*.log
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
