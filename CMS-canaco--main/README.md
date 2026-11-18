@@ -1,2 +1,0 @@
-# CMS-canaco-
-Sistema de administrador de contenido en Django
