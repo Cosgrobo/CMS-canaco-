@@ -11,6 +11,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 from django.utils import timezone
 from django.contrib.auth import update_session_auth_hash
+from django.http import JsonResponse
+from django.urls import reverse
 
 from .decorators import operador_required
 from .models import (
@@ -662,6 +664,133 @@ def eliminar_categoria(request, pk):
         )
 
     return redirect('home:crud_categorias')
+
+
+def _respuesta_categoria(categoria, status=200):
+    return JsonResponse(
+        {
+            'ok': True,
+            'categoria': {
+                'id': categoria.pk,
+                'nombre': categoria.nombre,
+                'created_at': timezone.localtime(
+                    categoria.createdat
+                ).strftime('%d/%m/%Y %H:%M'),
+                'edit_url': reverse(
+                    'home:ajax_editar_categoria',
+                    args=[categoria.pk]
+                ),
+                'delete_url': reverse(
+                    'home:ajax_eliminar_categoria',
+                    args=[categoria.pk]
+                ),
+            },
+        },
+        status=status,
+    )
+
+
+def _error_categoria(mensaje, status=400):
+    return JsonResponse(
+        {'ok': False, 'message': mensaje},
+        status=status,
+    )
+
+
+def _usuario_puede_administrar_categorias(request):
+    return (
+        request.user.is_authenticated
+        and request.user.is_active
+        and request.user.is_staff
+    )
+
+
+def ajax_crear_categoria(request):
+    if request.method != 'POST':
+        return _error_categoria('Método no permitido.', 405)
+    if not _usuario_puede_administrar_categorias(request):
+        status = 401 if not request.user.is_authenticated else 403
+        return _error_categoria(
+            'No tienes permiso para administrar categorías.',
+            status,
+        )
+
+    nombre = request.POST.get('nombre', '').strip()
+    if not nombre:
+        return _error_categoria('Escribe el nombre de la categoría.')
+    if len(nombre) > 60:
+        return _error_categoria(
+            'El nombre no puede superar los 60 caracteres.'
+        )
+    if Categoria.objects.filter(nombre__iexact=nombre).exists():
+        return _error_categoria(
+            'Ya existe una categoría con ese nombre.',
+            409,
+        )
+
+    categoria = Categoria.objects.create(
+        nombre=nombre,
+        fk_user=request.user,
+    )
+    return _respuesta_categoria(categoria, status=201)
+
+
+def ajax_editar_categoria(request, pk):
+    if request.method != 'POST':
+        return _error_categoria('Método no permitido.', 405)
+    if not _usuario_puede_administrar_categorias(request):
+        status = 401 if not request.user.is_authenticated else 403
+        return _error_categoria(
+            'No tienes permiso para administrar categorías.',
+            status,
+        )
+
+    categoria = Categoria.objects.filter(pk=pk).first()
+    if categoria is None:
+        return _error_categoria('La categoría no existe.', 404)
+    nombre = request.POST.get('nombre', '').strip()
+    if not nombre:
+        return _error_categoria('El nombre de la categoría es obligatorio.')
+    if len(nombre) > 60:
+        return _error_categoria(
+            'El nombre no puede superar los 60 caracteres.'
+        )
+    if Categoria.objects.filter(
+        nombre__iexact=nombre
+    ).exclude(pk=pk).exists():
+        return _error_categoria(
+            'Ya existe otra categoría con ese nombre.',
+            409,
+        )
+
+    categoria.nombre = nombre
+    categoria.updatedat = timezone.now()
+    categoria.save(update_fields=['nombre', 'updatedat'])
+    return _respuesta_categoria(categoria)
+
+
+def ajax_eliminar_categoria(request, pk):
+    if request.method != 'POST':
+        return _error_categoria('Método no permitido.', 405)
+    if not _usuario_puede_administrar_categorias(request):
+        status = 401 if not request.user.is_authenticated else 403
+        return _error_categoria(
+            'No tienes permiso para administrar categorías.',
+            status,
+        )
+
+    categoria = Categoria.objects.filter(pk=pk).first()
+    if categoria is None:
+        return _error_categoria('La categoría no existe.', 404)
+    try:
+        categoria.delete()
+    except RestrictedError:
+        return _error_categoria(
+            'No se puede eliminar esta categoría porque tiene noticias asociadas.',
+            409,
+        )
+
+    return JsonResponse({'ok': True, 'message': 'Categoría eliminada.'})
 
 
 # ==========================================

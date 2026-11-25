@@ -1,5 +1,6 @@
 
 {% extends 'partials/sidebar_base.html' %}
+{% load static %}
 
 {% block title %}Administrar categorías | CANACO{% endblock %}
 
@@ -15,6 +16,8 @@
             </p>
         </div>
     </div>
+
+    <div id="category-feedback" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Mensajes -->
     {% if messages %}
@@ -42,7 +45,8 @@
 
         <div class="card-body">
 
-            <form method="POST">
+            <form id="category-form" method="POST"
+                  action="{% url 'home:ajax_crear_categoria' %}">
                 {% csrf_token %}
 
                 <div class="form-group">
@@ -59,8 +63,11 @@
                     >
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button id="category-submit" type="submit" class="btn btn-primary">
                     Registrar categoría
+                </button>
+                <button id="category-cancel" type="button" class="btn btn-secondary d-none">
+                    Cancelar
                 </button>
 
             </form>
@@ -71,28 +78,27 @@
     <section class="canaco-admin-record-list" aria-labelledby="categories-list-heading">
         <h2 class="h4 mb-3" id="categories-list-heading">Categorías registradas</h2>
         {% for categoria in categorias %}
-            <article class="canaco-admin-record-card">
+            <article class="canaco-admin-record-card" data-category-id="{{ categoria.pk }}"
+                     data-edit-url="{% url 'home:ajax_editar_categoria' categoria.pk %}"
+                     data-delete-url="{% url 'home:ajax_eliminar_categoria' categoria.pk %}">
                 <div class="canaco-admin-record-content">
                     <div class="canaco-admin-record-topline">
                         <span class="canaco-admin-record-label">Categoría #{{ categoria.id }}</span>
                     </div>
-                    <h3 class="canaco-admin-record-title">{{ categoria.nombre }}</h3>
+                    <h3 class="canaco-admin-record-title" data-category-name>{{ categoria.nombre }}</h3>
                     <div class="canaco-admin-record-meta">
                         <span>Creada el {{ categoria.createdat|date:"d/m/Y H:i" }}</span>
                     </div>
                 </div>
                 <div class="canaco-admin-record-actions">
-                    <a href="{% url 'home:editar_categoria' categoria.pk %}"
-                       class="btn btn-outline-secondary btn-sm">Editar</a>
-                    <form method="POST" action="{% url 'home:eliminar_categoria' categoria.pk %}"
-                          onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?');">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm canaco-comment-delete">Eliminar</button>
-                    </form>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                            data-category-edit>Editar</button>
+                    <button type="button" class="btn btn-sm canaco-comment-delete"
+                            data-category-delete>Eliminar</button>
                 </div>
             </article>
         {% empty %}
-            <div class="canaco-news-empty">No hay categorías registradas.</div>
+            <div class="canaco-news-empty" data-category-empty>No hay categorías registradas.</div>
         {% endfor %}
     </section>
 
@@ -105,3 +111,7 @@
 </div>
 
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/categorias-admin.js' %}" defer></script>
+{% endblock extra_js %}

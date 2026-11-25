@@ -133,6 +133,24 @@ urlpatterns = [
     ),
 
     path(
+        "crud_categorias/ajax/crear/",
+        views.ajax_crear_categoria,
+        name="ajax_crear_categoria"
+    ),
+
+    path(
+        "crud_categorias/<int:pk>/ajax/editar/",
+        views.ajax_editar_categoria,
+        name="ajax_editar_categoria"
+    ),
+
+    path(
+        "crud_categorias/<int:pk>/ajax/eliminar/",
+        views.ajax_eliminar_categoria,
+        name="ajax_eliminar_categoria"
+    ),
+
+    path(
         "crud_categorias/<int:pk>/editar/",
         views.editar_categoria,
         name="editar_categoria"
